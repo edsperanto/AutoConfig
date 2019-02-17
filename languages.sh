@@ -2,6 +2,7 @@
 source helpers.sh
 configFile=$1
 
+# gets statuses of each language
 getStatuses() {
 	if [[ $(valueOf "language.cpp.use" "$configFile") == "true" ]]; then 
 		statuses[0]="ENABLED"
@@ -28,7 +29,9 @@ getStatuses() {
 	fi
 }
 
-fxn() {
+
+# runs python menu
+python() {
 
 	if [[ $(valueOf "language.python.use" "$configFile") == "true" ]]; then
 		prefs[0]="ON"
@@ -36,32 +39,39 @@ fxn() {
 		prefs[0]="OFF"
 	fi
 	
-	if [[ $(valueOf "language.python.version.3" "$configFile") == "true" ]]; then
+	if [[ $(valueOf \
+		"language.python.version.3" "$configFile") == "true" ]]; then
+		
 		prefs[1]="ON"
 	else
 		prefs[1]="OFF"
 	fi
 
-	if [[ $(valueOf "language.python.package.pandas" "$configFile") == "true" ]]; then
+	if [[ $(valueOf \
+		"language.python.package.pandas" "$configFile") == "true" ]]; then
+		
 		prefs[2]="ON"
 	else
 		prefs[2]="OFF"
 	fi
 
-	if [[ $(valueOf "language.python.package.numpy" "$configFile") == "true" ]]; then
+	if [[ $(valueOf \
+		"language.python.package.numpy" "$configFile") == "true" ]]; then
+		
 		prefs[3]="ON"
 	else
 		prefs[3]="OFF"
 	fi	
 
 	libs=$(whiptail --title "Python" --checklist \
-"\nConfigure Python options:" \
---nocancel --ok-button "Done" 15 60 4 \
-"Python" "(Uncheck to disable the language)" ${prefs[0]} \
-"Python 3" "(Uncheck for Python 2)" ${prefs[1]} \
-"Pandas" "Data structures & analysis" ${prefs[2]} \
-"NumPy" "Computing with Python" ${prefs[3]} 3<&1 1<&2 2<&3)
-	# TODO just echoes selections for now
+	"\nConfigure Python options:" \
+	--nocancel --ok-button "Done" 15 60 4 \
+	"Python" "(Uncheck to disable the language)" ${prefs[0]} \
+	"Python 3" "(Uncheck for Python 2)" ${prefs[1]} \
+	"Pandas" "Data structures & analysis" ${prefs[2]} \
+	"NumPy" "Computing with Python" ${prefs[3]} 3<&1 1<&2 2<&3)
+	
+	# updates configurations
 	if [[ $libs == *"\"Python\""* ]]; then
 		$(change "language.python.use" "true" "$configFile")
 		
@@ -97,26 +107,28 @@ fxn() {
 	languagesMenu
 }
 
+
+# languages main menu
 languagesMenu() {
 	# obtains languages status (ENABLED/DISABLED)
 	getStatuses
 
 	# creates menu
     options=$(whiptail --title "Languages" --menu \
---ok-button "Back" \
---nocancel \
-"\nConfigure languages" 15 60 4 \
-"C++" "  ${statuses[0]}" \
-"Python" "  ${statuses[1]}" \
-"Javascript" "  ${statuses[2]}" \
-"Java" "  ${statuses[3]}" 3<&1 1<&2 2<&3)
+	--ok-button "Back" \
+	--nocancel \
+	"\nConfigure languages" 15 60 4 \
+	"C++" "  ${statuses[0]}" \
+	"Python" "  ${statuses[1]}" \
+	"Javascript" "  ${statuses[2]}" \
+	"Java" "  ${statuses[3]}" 3<&1 1<&2 2<&3)
 	
     exitstatus=$?
 
 	if [ $exitstatus=0  ]; then
 		case $options in
 			"C++") bash C++.sh $configFile ;;
-			"Python") fxn ;;
+			"Python") python ;;
 			"Javascript") bash Javascript.sh $configFile ;;
 			"Java") bash Java.sh $configFile ;;
 		esac
@@ -125,13 +137,6 @@ languagesMenu() {
 		exit 0
 	fi
 	exit 0
-	# lang/ folder
-    # for i in $options
-    # do
-		# creates & calls script path from selection 
-		# i.e. "C++" --> langs/C++.sh
-		# bash langs/"${i//\"}".sh "$configFile"
-    # done
 }
 
 
