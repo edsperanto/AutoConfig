@@ -21,12 +21,13 @@ getStatuses() {
 }
 
 languagesMenu() {
+	# obtains languages status (ENABLED/DISABLED)
 	getStatuses
 
-	# creates checklist, returns list of selections
+	# creates menu
     options=$(whiptail --title "Languages" --menu \
---nocancel \
 --ok-button "Back" \
+--nocancel \
 "Configure languages" 15 60 4 \
 "C++" "  ${statuses[0]}" \
 "Python" "  ${statuses[1]}" \
@@ -36,9 +37,14 @@ languagesMenu() {
     exitstatus=$?
 
 	if [ $exitstatus=0  ]; then
+		case $options in
+			"C++") echo "C++" ;;
+			"Python") echo "Py" ;;
+			"Javascript") echo "JS" ;;
+			"Java") echo "Java" ;;
+		esac
+
 		bash main.sh $configFile
-	else
-		exit 0
 	fi
 
 	# lang/ folder
