@@ -1,14 +1,22 @@
+#!/bin/bash
 configFile=$1
 
 mainMenu() {
-    local options=$(whiptail --title "Languages" --checklist "Select languages you would like to configure" 15 60 4 \ "C++" "" OFF \ "Python" "" OFF \ "Javascript" "" OFF \ "Java" "" OFF 3<&1 1<&2 2<&3)
-    
+	# creates checklist, returns list of selections
+    options=$(whiptail --title "Languages" --checklist \
+"Select languages you would like to configure" 15 60 4 \
+"C++" "" OFF \
+"Python" "" OFF \
+"Javascript" "" OFF \
+"Java" "" OFF 3<&1 1<&2 2<&3)
+
     exitstatus=$?
-    if [ $exitstatus = 0 ]; then
-        echo "Chose: $options"
-    else
-        echo $exitstatus
-    fi	
+
+	# TODO currently just loops through and prints selections
+    for i in $options
+    do
+		bash langs/"${i//\"}".sh
+    done
 }
 
 mainMenu
