@@ -1,4 +1,7 @@
 #!bin/bash
+source helpers.sh
+
+configFile=$1
 
 # yesno whiptail to select python version
 selectVersion() {
@@ -6,9 +9,11 @@ selectVersion() {
 --yes-button "Python 2" --no-button "Python 3" \
 "Choose your desired Python version:" 10 60) then
 		# TODO just echoes choice for now
-		echo "Python 2"
+        change "language.python.version.3" "false" "$configFile"
+        change "language.python.version.2" "true" "$configFile"
 	else
-		echo "Python 3"
+        change "language.python.version.3" "true" "$configFile"
+        change "language.python.version.2" "false" "$configFile"
 	fi
 }
 

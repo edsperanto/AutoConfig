@@ -7,6 +7,11 @@ else
     configFile=$1
 fi
 
+findEditorDir() {
+    local editor=$(sudo update-alternatives --display editor | grep '^\/.*' | \
+        cut -f1 -d" " | grep -E -o "[^[:space:]]*/$1")
+}
+
 getEditorsList() {
     echo $(sudo update-alternatives --display editor | grep '^\/.*' | \
         cut -f1 -d" ")
@@ -38,5 +43,4 @@ editorsMenu() {
     fi
 }
 
-# editorsMenu
 getEditorsList

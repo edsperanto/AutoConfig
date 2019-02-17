@@ -19,7 +19,7 @@ mainMenu() {
     do
 		# creates & calls script path from selection 
 		# i.e. "C++" --> langs/C++.sh
-		bash langs/"${i//\"}".sh
+		bash langs/"${i//\"}".sh "$configFile"
     done
 }
 
