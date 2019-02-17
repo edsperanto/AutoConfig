@@ -1,7 +1,10 @@
 #!/bin/bash
 # editors menu
 
+source helpers.sh
 configFile=$1
+
+title="EDITORS CONFIGURATION"
 
 findEditorDir() {
     local editor=$(sudo update-alternatives --display editor | grep '^\/.*' | \
@@ -13,15 +16,11 @@ getEditorsList() {
         cut -f1 -d" ")
 }
 
-loadEditorsConfig() {
-    declare -A editorsConfig
-    editors
-}
-
 editorsMenu() {
-    local title="Editors Configuration"
-    local prompt="\nPick your default editor"
-    local option=$(whiptail --title "${title}" --menu "${prompt}" 15 60 6 \
+    local defEditor=$(valueOf "editor.default" "$configFile")
+    local prompt="\nYour current default editor is $defEditor"
+    local option=$(whiptail --title "${title}" --menu "${prompt}" \
+        --nocancel --ok-button "Done" 15 60 6 \
         "1" "ed" \
         "2" "nano" \
         "3" "vim" \
@@ -30,15 +29,53 @@ editorsMenu() {
     exitstatus=$?
     if [ $exitstatus = 0 ]; then
         case $option in
-            1) change "editor.default" "ed" "$configFile";;
-            2) change "editor.default" "nano" "$configFile";;
-            3) change "editor.default" "vim.basic" "$configFile";;
-            4) change "editor.default" "emacs" "$configFile";;
-            5) bash main.sh $configFile ;;
+            1) useEd ;;
+            2) useNano ;;
+            3) useVim ;;
+            4) useEmacs ;;
+            5) bash main.sh $configFile
         esac
-    else
-        exit 0
     fi
 }
 
-getEditorsList
+useEd() {
+    local prompt="Set ed as your default editor?"
+    if (whiptail --title "$title" --yesno "$prompt" 15 60) then
+        change "editor.default" "ed" "$configFile"
+    else
+        editorsMenu
+    fi
+    editorsMenu
+}
+
+useNano() {
+    local prompt="Set nano as your default editor?"
+    if (whiptail --title "$title" --yesno "$prompt" 15 60) then
+        change "editor.default" "nano" "$configFile"
+    else
+        editorsMenu
+    fi
+    editorsMenu
+}
+
+useVim() {
+    local prompt="Set vim as your default editor?"
+    if (whiptail --title "$title" --yesno "$prompt" 15 60) then
+        change "editor.default" "vim.basic" "$configFile"
+    else
+        editorsMenu
+    fi
+    editorsMenu
+}
+
+useEmacs() {
+    local prompt="Set emacs as your default editor?"
+    if (whiptail --title "$title" --yesno "$prompt" 15 60) then
+        change "editor.default" "emacs" "$configFile"
+    else
+        editorsMenu
+    fi
+    editorsMenu
+}
+
+editorsMenu
