@@ -32,8 +32,8 @@ languagesMenu() {
 "Java" "  ${statuses[3]}" 3<&1 1<&2 2<&3)
 	
     exitstatus=$?
-	
-	# loops through selections and calls those language scripts in 
+	exit 0
+
 	# lang/ folder
     # for i in $options
     # do

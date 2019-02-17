@@ -36,7 +36,8 @@ mainMenu() {
         configFile="my_config"
         local prompt="\nLoaded default configurations. What do you want to do?"
     fi
-    local option=$(whiptail --title "Main Menu" --menu "${prompt}" 15 60 6 \
+    local option=$(whiptail --title "Main Menu" --menu "${prompt}" \
+        --cancel-button "Quit" 15 60 6 \
         "1" "Configure users" \
         "2" "Configure languages" \
         "3" "Configure shells" \
@@ -44,6 +45,7 @@ mainMenu() {
         "5" "Configure miscellaneous" \
         "6" "Apply configurations" 3>&1 1>&2 2>&3)
     exitstatus=$?
+    echo "exitstatus: ${exitstatus}"
     if [ $exitstatus = 0 ]; then
         case $option in
             1) bash users.sh $configFile ;;
@@ -54,7 +56,7 @@ mainMenu() {
             6) bash apply.sh $configFile ;;
         esac
     else
-        welcome
+        exit 0
     fi
 }
 
