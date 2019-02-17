@@ -38,7 +38,27 @@ configureOptions() {
 	if [[ $libs == *"\"Python\""* ]]; then
 		$(change "language.python.use" "true" "$configFile")
 		
-		
+		if [[ $libs == *"\"Python 3\""* ]]; then
+			$(change "language.python.version.3" "true" "$configFile")
+			$(change "language.python.version.2" "false" "$configFile")
+		else 
+			$(change "language.python.version.3" "false" "$configFile")
+			$(change "language.python.version.2" "true" "$configFile")
+		fi
+
+		if [[ $libs == *"\"Pandas\""* ]]; then
+			$(change "language.python.package.pandas" "true" "$configFile")
+		else
+			$(change \
+			"language.python.package.pandas" "false" "$configFile")
+		fi
+
+		if [[ $libs == *"\"NumPy\""* ]]; then
+			$(change "language.python.package.numpy" "true" "$configFile")
+		else
+			$(change "language.python.package.numpy" "false" "$configFile")
+		fi
+
 	else
 		$(change "language.python.use" "false" "$configFile")
 		$(change "language.python.version.3" "false" "$configFile")
