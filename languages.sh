@@ -38,10 +38,10 @@ languagesMenu() {
 
 	if [ $exitstatus=0  ]; then
 		case $options in
-			"C++") echo "C++" ;;
-			"Python") echo "Py" ;;
-			"Javascript") echo "JS" ;;
-			"Java") echo "Java" ;;
+			"C++") bash langs/C++.sh "$configFile" ;;
+			"Python") bash langs/Python.sh "$configFile" ;;
+			"Javascript") bash langs/Javascript.sh "$configFile" ;;
+			"Java") bash langs/Java.sh "$configFile" ;;
 		esac
 
 		bash main.sh $configFile
