@@ -45,7 +45,6 @@ mainMenu() {
         "5" "Configure miscellaneous" \
         "6" "Apply configurations" 3>&1 1>&2 2>&3)
     exitstatus=$?
-    echo "exitstatus: ${exitstatus}"
     if [ $exitstatus = 0 ]; then
         case $option in
             1) bash users.sh $configFile ;;
