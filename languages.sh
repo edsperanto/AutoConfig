@@ -12,6 +12,7 @@ mainMenu() {
 	
 	#TODO THIS IS ALWAYS ZERO
     exitstatus=$?
+    exit 0
 
 	# loops through selections and calls those language scripts in 
 	# lang/ folder

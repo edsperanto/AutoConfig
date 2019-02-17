@@ -1,11 +1,7 @@
 #!/bin/bash
-# main menu
+# editors menu
 
-if [ $# -eq 0 ]; then
-    exit 0
-else
-    configFile=$1
-fi
+configFile=$1
 
 findEditorDir() {
     local editor=$(sudo update-alternatives --display editor | grep '^\/.*' | \
@@ -34,12 +30,14 @@ editorsMenu() {
     exitstatus=$?
     if [ $exitstatus = 0 ]; then
         case $option in
-            1) echo "You selected one";;
-            2) echo "You selected two";;
-            3) bash main.sh $configFile ;;
+            1) change "editor.default" "ed" "$configFile";;
+            2) change "editor.default" "nano" "$configFile";;
+            3) change "editor.default" "vim.basic" "$configFile";;
+            4) change "editor.default" "emacs" "$configFile";;
+            5) bash main.sh $configFile ;;
         esac
     else
-        welcome
+        exit 0
     fi
 }
 

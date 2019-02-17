@@ -1,6 +1,6 @@
 user.name=admin
 user.shell=bash
-user.pubkey=null
+user.ssh.pubkey=null
 user.homedir=true
 user.sudoer=true
 language.cpp.use=true
@@ -13,7 +13,7 @@ language.nodejs.use=true
 language.nodejs.version=lts
 language.nodejs.package.express=true
 language.java.use=true
-editor.preference=vim
+editor.default=vim
 editor.vim.use=true
 editor.emacs.use=true
 editor.vim.package.nerdtree=true
