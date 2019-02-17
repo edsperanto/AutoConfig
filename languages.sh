@@ -25,6 +25,8 @@ languagesMenu() {
 
 	# creates checklist, returns list of selections
     options=$(whiptail --title "Languages" --menu \
+--nocancel \
+--ok-button "Back" \
 "Configure languages" 15 60 4 \
 "C++" "  ${statuses[0]}" \
 "Python" "  ${statuses[1]}" \
@@ -32,7 +34,12 @@ languagesMenu() {
 "Java" "  ${statuses[3]}" 3<&1 1<&2 2<&3)
 	
     exitstatus=$?
-	exit 0
+
+	if [ $exitstatus=0  ]; then
+		bash main.sh $configFile
+	else
+		exit 0
+	fi
 
 	# lang/ folder
     # for i in $options
