@@ -32,19 +32,27 @@ mainMenu() {
     if [[ $configFile != "null" ]]; then
         local prompt="\nLoaded configurations from ${configFile}."
     else
-        local prompt="\nWhat do you want to do?"
+        cp default_config my_config;
+        configFile="my_config"
+        local prompt="\nLoaded default configurations. What do you want to do?"
     fi
     local option=$(whiptail --title "Main Menu" --menu "${prompt}" 15 60 6 \
         "1" "Configure users" \
         "2" "Configure languages" \
-        "3" "Configure shell" \
-        "4" "Configure editor" \
+        "3" "Configure shells" \
+        "4" "Configure editors" \
         "5" "Configure miscellaneous" \
         "6" "Apply configurations" 3>&1 1>&2 2>&3)
     exitstatus=$?
     if [ $exitstatus = 0 ]; then
-        echo "Your choice was: ${option}"
-        echo "File: $1"
+        case $option in
+            1) bash users.sh $configFile ;;
+            2) bash languages.sh $configFile ;;
+            3) bash shells.sh $configFile ;;
+            4) bash editors.sh $configFile ;;
+            5) bash miscellaneous.sh $configFile ;;
+            6) bash apply.sh $configFile ;;
+        esac
     else
         welcome
     fi
