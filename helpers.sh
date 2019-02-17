@@ -14,3 +14,16 @@ RESET=`tput sgr0`
 BOLD=`tput bold`
 UNDERLINE=`tput smul`
 NO_UNDERLINE=`tput rmul`
+
+# USAGE: valueOf "key" "config_file"
+valueOf() {
+    echo $(grep $1 $2 | sed 's/.*=\(.*\)/\1/')
+}
+
+#USAGE: change "key" "value" "config_file"
+change() {
+    local key=$1
+    local value=$2
+    local configFile=$3
+    sed -i "s/${key}=.*/${key}=${value}/" "${configFile}"
+}
