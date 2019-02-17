@@ -1,26 +1,47 @@
 #!/bin/bash
+source helpers.sh
 configFile=$1
 
-mainMenu() {
-	# creates checklist, returns list of selections
-    options=$(whiptail --title "Languages" --checklist \
-"Select languages you would like to configure" 15 60 4 \
-"C++" "" OFF \
-"Python" "" OFF \
-"Javascript" "" OFF \
-"Java" "" OFF 3<&1 1<&2 2<&3)
-	
-	#TODO THIS IS ALWAYS ZERO
-    exitstatus=$?
+getStatuses() {
+	if [ $(valueOf "language.cpp.use" "$configFile") ]; then 
+		statuses[0]="ENABLED"
+	fi
 
-	# loops through selections and calls those language scripts in 
-	# lang/ folder
-    for i in $options
-    do
-		# creates & calls script path from selection 
-		# i.e. "C++" --> langs/C++.sh
-		bash langs/"${i//\"}".sh "$configFile"
-    done
+	if [ $(valueOf "language.python.use" "$configFile") ]; then 
+		statuses[1]="ENABLED"
+	fi
+
+	if [ $(valueOf "language.nodejs.use" "$configFile") ]; then 
+		statuses[2]="ENABLED"
+	fi
+
+	if [ $(valueOf "language.java.use" "$configFile") ]; then 
+		statuses[3]="ENABLED"
+	fi
 }
 
-mainMenu
+languagesMenu() {
+	getStatuses
+
+	# creates checklist, returns list of selections
+    options=$(whiptail --title "Languages" --menu \
+"Configure languages" 15 60 4 \
+"C++" "  ${statuses[0]}" \
+"Python" "  ${statuses[1]}" \
+"Javascript" "  ${statuses[2]}" \
+"Java" "  ${statuses[3]}" 3<&1 1<&2 2<&3)
+	
+    exitstatus=$?
+	
+	# loops through selections and calls those language scripts in 
+	# lang/ folder
+    # for i in $options
+    # do
+		# creates & calls script path from selection 
+		# i.e. "C++" --> langs/C++.sh
+		# bash langs/"${i//\"}".sh "$configFile"
+    # done
+}
+
+statuses=("DISABLED" "DISABLED" "DISABLED" "DISABLED")
+languagesMenu
