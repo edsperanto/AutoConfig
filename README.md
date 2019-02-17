@@ -1,1 +1,3 @@
 # AutoConfig
+
+## Example text
