@@ -7,13 +7,16 @@ configFile=$1
 userTitle="USER CONFIGURATION"
 
 userMenu() {
+    local pk="$(getPubKey)"
+    local hd="$(getHomeDir)"
+    local su="$(getSudoer)"
     local prompt="\nChoose which item you would like to change:"
     local userOption=$(whiptail --title "$userTitle" --menu "$prompt" 17 60 7 \
         "Username:" "$(valueOf "user.name" "$configFile")" \
         "Password:" "[hidden]" \
-        "SSH Public Key:" "$(valueOf "user.ssh.pubkey.enabled" "$configFile")" \
-        "Home Directory:" "$(valueOf "user.name" "$configFile")" \
-        "Sudoer:" "$(valueOf "user.name" "$configFile")" \
+        "SSH Public Key:" "$pk"\
+        "Home Directory:" "$hd" \
+        "Sudoer:" "$su" \
         "Default Shell:" "$(valueOf "user.shell" "$configFile")" 3>&1 1>&2 2>&3)
 
     exitstatus=$?
@@ -34,6 +37,18 @@ userMenu() {
     fi
     exit 0
 
+}
+
+getPubKey() {
+    local pubKey=$(valueOf "user.ssh.pubkey" "$configFile")
+}
+
+getHomeDir() {
+    local homeDir=$(valueOf "user.homedir" "$configFile")
+}
+
+getSudoer() {
+    local sudoer=$(valueOf "user.sudoer" "$configFile")
 }
 
 setUserName() {
