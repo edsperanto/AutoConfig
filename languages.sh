@@ -55,7 +55,7 @@ fxn() {
 	fi	
 
 	libs=$(whiptail --title "Python" --checklist \
-"Configure Python options:" \
+"\nConfigure Python options:" \
 --nocancel --ok-button "Done" 15 60 4 \
 "Python" "(Uncheck to disable the language)" ${prefs[0]} \
 "Python 3" "(Uncheck for Python 2)" ${prefs[1]} \
@@ -105,7 +105,7 @@ languagesMenu() {
     options=$(whiptail --title "Languages" --menu \
 --ok-button "Back" \
 --nocancel \
-"Configure languages" 15 60 4 \
+"\nConfigure languages" 15 60 4 \
 "C++" "  ${statuses[0]}" \
 "Python" "  ${statuses[1]}" \
 "Javascript" "  ${statuses[2]}" \
