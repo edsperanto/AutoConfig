@@ -120,17 +120,17 @@ languagesMenu() {
 	"\nConfigure languages" 15 60 4 \
 	"C++" "  ${statuses[0]}" \
 	"Python" "  ${statuses[1]}" \
-	"Javascript" "  ${statuses[2]}" \
+	"Node.js" "  ${statuses[2]}" \
 	"Java" "  ${statuses[3]}" 3<&1 1<&2 2<&3)
 	
     exitstatus=$?
 
 	if [ $exitstatus=0  ]; then
 		case $options in
-			"C++") bash C++.sh $configFile ;;
+			"C++") ;; # bash C++.sh $configFile ;;
 			"Python") python ;;
-			"Javascript") bash Javascript.sh $configFile ;;
-			"Java") bash Java.sh $configFile ;;
+			"Node.js") ;; # bash Nodejs.sh $configFile ;;
+			"Java") ;; # bash Java.sh $configFile ;;
 		esac
 
 		bash main.sh $configFile
