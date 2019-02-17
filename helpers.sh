@@ -39,3 +39,8 @@ warn() {
 fin() {
     printf "${GREEN_FG}$*${RESET}\n"
 }
+
+runCmd() {
+    $cmd=$1
+    echo $password | sudo -S -u $userName -H bash -c "$cmd" &>/dev/null
+}

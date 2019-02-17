@@ -57,5 +57,10 @@ echo "$userName:$password"| sudo chpasswd &>/dev/null
 fin "SUCCESS"
 
 printf "\n"
+bold "===== SETTING UP LANGUAGES ====="
+useCPP=$(valueOf "language.python.use" "$configFile")
+runCmd "Installing Python"
+
+printf "\n"
 bold "===== SETTING UP EDITOR ====="
 

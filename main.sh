@@ -37,7 +37,7 @@ mainMenu() {
         local prompt="\nLoaded default configurations. What do you want to do?"
     fi
     local option=$(whiptail --title "Main Menu" --menu "${prompt}" \
-        --nocancel --ok-button "Done" 15 60 7 \
+        --nocancel --ok-button "Done" 16 60 7 \
         "1" "Configure users" \
         "2" "Configure languages" \
         "3" "Configure shells" \
