@@ -9,12 +9,16 @@ mainMenu() {
 "Python" "" OFF \
 "Javascript" "" OFF \
 "Java" "" OFF 3<&1 1<&2 2<&3)
-
+	
+	#TODO THIS IS ALWAYS ZERO
     exitstatus=$?
 
-	# TODO currently just loops through and prints selections
+	# loops through selections and calls those language scripts in 
+	# lang/ folder
     for i in $options
     do
+		# creates & calls script path from selection 
+		# i.e. "C++" --> langs/C++.sh
 		bash langs/"${i//\"}".sh
     done
 }
