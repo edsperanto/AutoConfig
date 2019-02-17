@@ -37,13 +37,14 @@ mainMenu() {
         local prompt="\nLoaded default configurations. What do you want to do?"
     fi
     local option=$(whiptail --title "Main Menu" --menu "${prompt}" \
-        --cancel-button "Quit" 15 60 6 \
+        --nocancel --ok-button "Done" 15 60 7 \
         "1" "Configure users" \
         "2" "Configure languages" \
         "3" "Configure shells" \
         "4" "Configure editors" \
         "5" "Configure miscellaneous" \
-        "6" "Apply configurations" 3>&1 1>&2 2>&3)
+        "6" "Apply configurations" \
+        "7" "Quit" 3>&1 1>&2 2>&3)
     exitstatus=$?
     if [ $exitstatus = 0 ]; then
         case $option in
@@ -53,9 +54,8 @@ mainMenu() {
             4) bash editors.sh $configFile ;;
             5) bash miscellaneous.sh $configFile ;;
             6) bash apply.sh $configFile ;;
+            7) exit 0
         esac
-    else
-        exit 0
     fi
 }
 

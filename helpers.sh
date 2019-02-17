@@ -27,3 +27,15 @@ change() {
     local configFile=$3
     sed -i "s/${key}=.*/${key}=${value}/" "${configFile}"
 }
+
+bold() {
+    printf "${BOLD}$*${RESET}\n"
+}
+
+warn() {
+    printf "${RED_FG}$*${RESET}\n"
+}
+
+fin() {
+    printf "${GREEN_FG}$*${RESET}\n"
+}

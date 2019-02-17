@@ -11,26 +11,32 @@ userMenu() {
     local hd="$(getHomeDir)"
     local su="$(getSudoer)"
     local prompt="\nChoose which item you would like to change:"
-    local userOption=$(whiptail --title "$userTitle" --menu "$prompt" 17 60 7 \
+    local userOption=$(whiptail --title "$userTitle" --menu "$prompt" \
+        --nocancel --ok-button "Done" 15 60 7 \
         "Username:" "$(valueOf "user.name" "$configFile")" \
         "Password:" "[hidden]" \
         "SSH Public Key:" "$pk"\
         "Home Directory:" "$hd" \
         "Sudoer:" "$su" \
-        "Default Shell:" "$(valueOf "user.shell" "$configFile")" 3>&1 1>&2 2>&3)
+        "Default Shell:" "$(valueOf "user.shell" "$configFile")" \
+        "Go Back" " " 3>&1 1>&2 2>&3)
 
     exitstatus=$?
     if [ $exitstatus = 0 ]; then
-        if [ $userOption = "Username:" ]; then
+        if [[ $userOption = "Username:" ]]; then
             setUserName
-        elif [ $userOption = "Password:" ]; then
+        elif [[ $userOption = "Password:" ]]; then
             setPassword
-        elif [ $userOption = "Public Key:" ]; then
+        elif [[ $userOption = "SSH Public Key:" ]]; then
             setPubKey
-        elif [ $userOption = "Home Directory:" ]; then
+        elif [[ $userOption = "Home Directory:" ]]; then
             setHomeDir
+        elif [[ $userOption = "Sudoer:" ]]; then
+            setSudoer
+        elif [[ $userOption = "Default Shell:" ]]; then
+            setDefShell
         else
-            setShell
+            bash main.sh "$configFile"
         fi
     else
         exit 0

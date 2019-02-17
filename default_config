@@ -1,4 +1,5 @@
 user.name=admin
+user.password=password
 user.shell=bash
 user.ssh.pubkey=null
 user.homedir=true
