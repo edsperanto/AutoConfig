@@ -58,8 +58,37 @@ fin "SUCCESS"
 
 printf "\n"
 bold "===== SETTING UP LANGUAGES ====="
-useCPP=$(valueOf "language.python.use" "$configFile")
-runCmd "Installing Python"
+useCPP=$(valueOf "language.cpp.use" "$configFile")
+
+if [[ $useCPP == "true" ]]; then
+	echo "installing cpp"
+else
+	echo "No C++ tools selected."
+fi
+
+usePy=$(valueOf "language.python.use" "$configFile")
+
+if [[ $usePy == "true" ]]; then
+	echo "installing python!"
+else
+	echo "No Python tools selected."
+fi
+
+useNode=$(valueOf "language.nodejs.use" "$configFile")
+
+if [[ $useNode == "true" ]]; then
+	echo "installing node"
+else
+	echo "No Node.js tools selected."
+fi
+
+useJava=$(valueOf "language.java.use" "$configFile")
+
+if [[ $useJava == "true" ]]; then
+	echo "installing java"
+else
+	echo "No Java tools selected."
+fi
 
 printf "\n"
 bold "===== SETTING UP EDITOR ====="

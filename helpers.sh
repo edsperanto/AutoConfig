@@ -41,6 +41,5 @@ fin() {
 }
 
 runCmd() {
-    $cmd=$1
-    echo $password | sudo -S -u $userName -H bash -c "$cmd" &>/dev/null
+    echo $password | sudo -S -u $userName -H bash -c "$1"
 }
