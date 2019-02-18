@@ -68,6 +68,42 @@ useVim() {
     editorsMenu
 }
 
+getVimStatus() {
+    local vimPkg="editor.vim.package"
+    if [[ $(valueOf "$vimPkg.emmet" "$configFile") == "true" ]]; then
+        vimPkgsStats[0]="ENABLED"
+    else
+        vimPkgsStats[0]="DISABLED"
+    fi
+    if [[ $(valueOf "$vimPkg.nerdtree" "$configFile") == "true" ]]; then
+        vimPkgsStats[1]="ENABLED"
+    else
+        vimPkgsStats[1]="DISABLED"
+    fi
+    if [[ $(valueOf "$vimPkg.autopairs" "$configFile") == "true" ]]; then
+        vimPkgsStats[2]="ENABLED"
+    else
+        vimPkgsStats[2]="DISABLED"
+    fi
+}
+
+vimSettings() {
+    local vimPkg="editor.vim.package"
+    local options=$(whiptail --title "$title" --menu --ok-button "Back" \
+        --nocancel "\nSelect vim packages to install" 15 60 4 \
+        "Emmet" "Auto-complete for HTML & CSS" ${vimPkgsStats[0]} \
+        "NerdTree" "File explorer plugin" ${vimPkgsStats[1]} \
+        "Auto-Pairs" "Auto-pairing for quotes and brackets" ${vimPkgsStats[2]} \
+        3<&1 1<&2 2&3)
+    exitstatus=$?
+    if [ $exitstatus = 0 ]; then
+        case $option in
+            "Emmet") change "$vimPkg.emmet" 
+        esac
+    fi
+    editorsMenu
+}
+
 useEmacs() {
     local prompt="Set emacs as your default editor?"
     if (whiptail --title "$title" --yesno "$prompt" 15 60) then
@@ -78,4 +114,5 @@ useEmacs() {
     editorsMenu
 }
 
+vimPkgsStats=("DISABLED" "DISABLED")
 editorsMenu
