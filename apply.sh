@@ -61,33 +61,72 @@ bold "===== SETTING UP LANGUAGES ====="
 useCPP=$(valueOf "language.cpp.use" "$configFile")
 
 if [[ $useCPP == "true" ]]; then
-	echo "installing cpp"
+	# TODO not real
+	printf "installing cpp... "
+	fin "SUCCESS"
 else
-	echo "No C++ tools selected."
+	printf "No C++ tools selected.\n"
 fi
+
+
+pyLibs() {
+	pip=$0
+	numpy=$(valueOf "language.python.packages.numpy" "$configFile")
+	pandas=$(valueOf "language.python.packages.pandas" "$configFile")
+
+	if [ $numpy == "true" ]; then
+		runCmd "echo $password | sudo -S $pip install numpy -y"
+	fi
+	if [ $pandas == "true" ]; then
+		runCmd "echo $password | sudo -S $pip install pandas -y"
+	fi
+	
+}
 
 usePy=$(valueOf "language.python.use" "$configFile")
 
 if [[ $usePy == "true" ]]; then
-	echo "installing python!"
+	printf "Installing Python tools... "
+
+	py3=$(valueOf "language.python.version.3" "$configFile")
+	if [[ $py3 == "true" ]]; then 
+		runCmd "echo $password | sudo -S apt-get install python3 -y"
+		runCmd "echo $password | sudo -S apt-get install python3-pip -y"
+
+		pyLibs "pip3"
+	else
+		runCmd "echo $password | sudo -S apt-get install python -y"
+		runCmd "echo $password | sudo -S apt-get install python-pip -y"
+
+		pyLibs "pip"
+	fi
+
+	
+
+	fin "SUCCESS"
+
 else
-	echo "No Python tools selected."
+	printf "No Python tools selected.\n"
 fi
 
 useNode=$(valueOf "language.nodejs.use" "$configFile")
 
 if [[ $useNode == "true" ]]; then
-	echo "installing node"
+	# TODO not real
+	printf "installing node... "
+	fin "SUCCESS"
 else
-	echo "No Node.js tools selected."
+	printf "No Node.js tools selected.\n"
 fi
 
 useJava=$(valueOf "language.java.use" "$configFile")
 
 if [[ $useJava == "true" ]]; then
-	echo "installing java"
+	# TODO not real
+	printf "installing java... "
+	fin "SUCCESS"
 else
-	echo "No Java tools selected."
+	printf "No Java tools selected.\n"
 fi
 
 printf "\n"
