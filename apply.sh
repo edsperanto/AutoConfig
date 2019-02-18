@@ -131,4 +131,32 @@ fi
 
 printf "\n"
 
-bold "===== SETTING UP EDITOR ====="
+bold "===== CONFIGURING EDITOR ====="
+printf "Installing vim... "
+runCmd "echo $password | sudo -S apt-get install vim -y"
+fin "SUCCESS"
+printf "Installing pathogen for vim... "
+runCmd "mkdir ~/.vim ~/.vim/tmp; mkdir -p ~/.vim/autoload ~/.vim/bundle && curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim"
+fin "SUCCESS"
+printf "Installing emmet for vim... "
+runCmd "cd ~/.vim/bundle; git clone https://github.com/mattn/emmet-vim.git"
+fin "SUCCESS"
+printf "Installing nerdtree for vim... "
+runCmd "cd ~/.vim/bundle; git clone https://github.com/scrooloose/nerdtree.git"
+fin "SUCCESS"
+printf "Installing auto-pairs for vim... "
+runCmd "cd ~/.vim/bundle; git clone https://github.com/jiangmiao/auto-pairs.git"
+fin "SUCCESS"
+
+bold "===== CONFIGURING MISCELLANEOUS ====="
+printf "Installing tmux... "
+runCmd "echo $password | sudo -S apt-get install tmux -y"
+fin "SUCCESS"
+printf "Installing tpm for tmux... "
+runCmd "git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm"
+fin "SUCCESS"
+printf "Copying dotfiles... "
+cp tmux.conf ~/.tmux.conf
+cp bashrc ~/.bashrc
+cp vimrc ~/.vimrc
+fin "SUCCESS"
