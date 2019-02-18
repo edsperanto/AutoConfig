@@ -74,10 +74,10 @@ pyLibs() {
 	numpy=$(valueOf "language.python.packages.numpy" "$configFile")
 	pandas=$(valueOf "language.python.packages.pandas" "$configFile")
 
-	if [ $numpy == "true" ]; then
+	if [[ $numpy == "true" ]]; then
 		runCmd "echo $password | sudo -S $pip install numpy -y"
 	fi
-	if [ $pandas == "true" ]; then
+	if [[ $pandas == "true" ]]; then
 		runCmd "echo $password | sudo -S $pip install pandas -y"
 	fi
 	
