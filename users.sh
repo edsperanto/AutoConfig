@@ -96,8 +96,9 @@ setSudoer() {
 }
 
 setDefShell() {
-    local shellChoice=$(whiptail --title "$userTitle" --menu \
-        "Pick your preferred shell: " --nocancel --ok-button "Done" 15 60 3 \ 
+    local prompt="Pick your preferred shell: "
+    local shellChoice=$(whiptail --title "$userTitle" --menu "${prompt}" \
+        --nocancel --ok-button "Done" 15 60 3 \ 
         "1" "sh" \
         "2" "bash" \
         "3" "zsh" 3>&1 1>&2 2>&3)
