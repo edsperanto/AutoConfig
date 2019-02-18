@@ -71,15 +71,19 @@ fi
 
 pyLibs() {
 	pip=$0
-	numpy=$(valueOf "language.python.packages.numpy" "$configFile")
-	pandas=$(valueOf "language.python.packages.pandas" "$configFile")
+	numpy=$(valueOf "language.python.package.numpy" "$configFile")
+	pandas=$(valueOf "language.python.package.pandas" "$configFile")
 
 	if [[ $numpy == "true" ]]; then
+		printf "NumPy "
 		runCmd "echo $password | sudo -S $pip install numpy -y"
 	fi
 	if [[ $pandas == "true" ]]; then
+		printf "Pandas "
 		runCmd "echo $password | sudo -S $pip install pandas -y"
 	fi
+
+	fin "SUCCESS"
 	
 }
 
@@ -92,18 +96,14 @@ if [[ $usePy == "true" ]]; then
 	if [[ $py3 == "true" ]]; then 
 		runCmd "echo $password | sudo -S apt-get install python3 -y"
 		runCmd "echo $password | sudo -S apt-get install python3-pip -y"
-
+		printf "Python3 "
 		pyLibs "pip3"
 	else
 		runCmd "echo $password | sudo -S apt-get install python -y"
 		runCmd "echo $password | sudo -S apt-get install python-pip -y"
-
+		printf "Python2 "
 		pyLibs "pip"
 	fi
-
-	
-
-	fin "SUCCESS"
 
 else
 	printf "No Python tools selected.\n"
