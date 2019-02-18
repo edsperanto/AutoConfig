@@ -130,5 +130,5 @@ else
 fi
 
 printf "\n"
-bold "===== SETTING UP EDITOR ====="
 
+bold "===== SETTING UP EDITOR ====="
