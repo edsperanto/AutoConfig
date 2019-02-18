@@ -130,7 +130,6 @@ else
 fi
 
 printf "\n"
-
 bold "===== CONFIGURING EDITOR ====="
 printf "Installing vim... "
 runCmd "echo $password | sudo -S apt-get install vim -y"
@@ -148,6 +147,7 @@ printf "Installing auto-pairs for vim... "
 runCmd "cd ~/.vim/bundle; git clone https://github.com/jiangmiao/auto-pairs.git"
 fin "SUCCESS"
 
+printf "\n"
 bold "===== CONFIGURING MISCELLANEOUS ====="
 printf "Installing tmux... "
 runCmd "echo $password | sudo -S apt-get install tmux -y"
@@ -160,3 +160,7 @@ cp tmux.conf ~/.tmux.conf
 cp bashrc ~/.bashrc
 cp vimrc ~/.vimrc
 fin "SUCCESS"
+
+bold "===== LOGGING IN AS YOUR NEW USER ====="
+userName=$(valueOf "user.name" "$configFile")
+su - $userName
